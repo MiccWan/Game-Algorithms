@@ -1,6 +1,6 @@
 import math
 
-def spillWater(cups = [3, 5], target = 4):
+def spillWater(cups = [3, 5], target = 4, printAns = False, maxDepth = math.inf, runAll = False):
 
     n = len(cups)
     fullCup = cups.copy()
@@ -45,39 +45,42 @@ def spillWater(cups = [3, 5], target = 4):
                     if i != j:
                         yield self.transfer(i, j)
 
-    def BFS():
+    def BFS(maxDepth = maxDepth):
         state = State()
         stateQueue = [(state.get(), 0, 0)]
         history = set([state.get()])
         i = 0
-        minDepth = math.inf
-        ans = 0
+        ans = []
 
         while i < len(stateQueue):
-            # if stateQueue[i][2] + 1 >  minDepth:
-            #     break
-            if i % 10000 == 0:
-                print(i)
+            if stateQueue[i][2] > maxDepth:
+                break
             if target in stateQueue[i][0]:
-                ans += 1
-                # trace = i
-                # path = [stateQueue[trace][0]]
-                # while trace != 0:
-                #     trace = stateQueue[trace][1]
-                #     path.append(stateQueue[trace][0])
-                # print(list(reversed(path)))
-            else:
+                while len(ans) <= stateQueue[i][2]:
+                    ans.append(0)
+                ans[stateQueue[i][2]] += 1
+                if not runAll:
+                    maxDepth = min(maxDepth, stateQueue[i][2])
+                if printAns:
+                    trace = i
+                    path = [stateQueue[trace][0]]
+                    while trace != 0:
+                        trace = stateQueue[trace][1]
+                        path.append(stateQueue[trace][0])
+                    print(stateQueue[i][2], list(reversed(path)))
+            elif not stateQueue[i][2] == maxDepth:
                 for newState in State(list(stateQueue[i][0])).childNodes():
-                    if not (newState.get() in history):
-                        stateQueue.append((newState.get(), i, stateQueue[i][2] + 1))
-                        history.add(newState.get())
-                        if target in newState.get():
-                            minDepth = min(minDepth, stateQueue[i][2] + 1)
+                    if newState.get() in history:
+                        continue
+                    stateQueue.append((newState.get(), i, stateQueue[i][2] + 1))
+                    history.add(newState.get())
             i += 1
 
-        print(ans)
-        return minDepth
+        for step, num in enumerate(ans):
+            print("Step {} has {} way(s) to get 7.".format(step, num))
+
+        return ans
 
     return BFS()
 
-print(spillWater([19, 20, 21, 22], target = 7))
+spillWater([18, 19, 20, 21], target = 7, printAns = False, runAll = True)
