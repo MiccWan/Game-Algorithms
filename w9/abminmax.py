@@ -19,10 +19,6 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True, printAfter = 1
                     if abs(state[pos]) < abs(piece):
                         yield (piece, pos)
 
-    def getChildNodes(state, left):
-        for piece, pos in getAvailableMoves(state, left):
-            yield moveFromState(state, left, piece, pos)
-
     # for piece, pos in getAvailableMoves([3, 3, -3, 3, 3, -3, 2, 1, -1], [0,1,2,2,0,1,1]):
     #     print(piece, pos)
 
@@ -78,9 +74,6 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True, printAfter = 1
         return 0
 
     def abminmax(state, left, depth = piece_max * piece_num * 2 + 1, alpha = -1, beta = 1, maximizing = False):
-        if depth == 0:
-            raise Exception("Depth 0!")
-            return (0,)
         winner = hasWinner(state)
         if winner:
             # print("Found winner! Returning", winner)
