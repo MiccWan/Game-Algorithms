@@ -1,3 +1,5 @@
+import time
+
 def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True, printAfter = 10):
 
     N = n * n
@@ -139,7 +141,9 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True, printAfter = 1
             return (value, best_piece, best_pos)
 
     def findNextStep(state, left):
+        start_time = time.time()
         search_result = abminmax(state, left)
+        print("Search used {} seconds.".format(time.time - start_time))
         return search_result
 
     def state2graph(state):
