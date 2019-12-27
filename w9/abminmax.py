@@ -1,4 +1,4 @@
-def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True):
+def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True, printAfter = 10):
 
     N = n * n
     positions = list(range(N))
@@ -83,7 +83,7 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True):
             return (0,)
         winner = hasWinner(state)
         if winner:
-            # print("Found winner ! Returning", winner)
+            # print("Found winner! Returning", winner)
             return (winner,)
         if sum(left) == 0:
             # print("No pieces left, returning 0")
@@ -112,7 +112,7 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True):
                         break
             # print("now is Maximizing")
             # print("Returning", value, best_piece, best_pos)
-            if depth > 9:
+            if depth > printAfter:
                 print(depth)
                 print(value, best_piece, best_pos)
             return (value, best_piece, best_pos)
@@ -140,7 +140,7 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True):
                         break
             # print("now is minimizing")
             # print("Returning", value, best_piece, best_pos)
-            if depth > 9:
+            if depth > printAfter:
                 print(depth)
                 print(value, best_piece, best_pos)
             return (value, best_piece, best_pos)
@@ -223,4 +223,4 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True):
 
     startGame()
 
-play(playerFirst=False)
+play(playerFirst=True)
