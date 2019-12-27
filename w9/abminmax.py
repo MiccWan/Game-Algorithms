@@ -143,7 +143,7 @@ def play(n = 3, piece_max = 3, piece_num = 2, playerFirst = True, printAfter = 1
     def findNextStep(state, left):
         start_time = time.time()
         search_result = abminmax(state, left)
-        print("Search used {} seconds.".format(time.time - start_time))
+        print("Search used {} seconds.".format(time.time() - start_time))
         return search_result
 
     def state2graph(state):
